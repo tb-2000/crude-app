@@ -40,7 +40,7 @@ function App() {
           type="text"
           value={newName}
           onChange={(e) => setNewName(e.target.value)}
-          placeholder="Namen eingeben"
+          placeholder="Bitte einen Namen eingeben"
           required
         />
         <button type="submit">Hinzufügen</button>

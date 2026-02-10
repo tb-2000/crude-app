@@ -3,23 +3,26 @@ import globals from "globals";
 
 export default [
   js.configs.recommended,
+
   {
+    files: ["**/*.{js,jsx}"],
     languageOptions: {
       globals: {
-        ...globals.node,      // ← das aktiviert require, module, process, console usw.
+        ...globals.browser,     // falls React / Browser-Code
+        ...globals.node,        // falls du node-globals brauchst
       },
       ecmaVersion: 2022,
-      sourceType: "commonjs", // ← wichtig für require()
+      sourceType: "module",     // ← das ist fast immer richtig für React/Vite/Create-React-App
     },
     rules: {
-      "no-console": "off",          // console.log erlauben (du nutzt es aktiv)
-      "no-undef": "error",          // bleibt aktiv
-      // Optional: mehr Regeln hinzufügen, z. B.
-      // "semi": ["error", "always"],
-      // "quotes": ["error", "single"],
+      "no-console": "off",
+      "no-undef": "error",
+      // ... deine Regeln
     },
   },
+
   {
-    ignores: ["node_modules/**", "dist/**"],
+    // Ignorieren – gilt global
+    ignores: ["node_modules/**", "dist/**", "build/**", ".vite/**"],
   },
 ];

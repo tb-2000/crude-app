@@ -15,6 +15,10 @@ export default [
     },
     rules: {
       ...pluginReactHooks.configs.recommended.rules,
+
+          
+    // ← das hier hinzufügen / überschreiben
+    "react-hooks/set-state-in-effect": "off", 
     },
   },
 

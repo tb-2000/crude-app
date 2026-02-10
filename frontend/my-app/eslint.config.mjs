@@ -18,6 +18,24 @@ export default [
     },
   },
 
+  // Neu: Globale Test-Umgebung für Jest / Vitest / Testing Library
+  {
+    files: ["**/*.test.{js,jsx,ts,tsx}", "**/__tests__/**/*.{js,jsx,ts,tsx}"],
+    languageOptions: {
+      globals: {
+        ...globals.jest,          // für Jest (test, expect, describe, ...)
+        // ...globals.vitest,     // ← falls du Vitest nutzt, nimm stattdessen das
+        // screen, fireEvent usw. kommen automatisch mit @testing-library/eslint-plugin (optional)
+      },
+    },
+    rules: {
+      // Optional: in Tests darf man manchmal console.log nutzen
+      "no-console": "off",
+      // Oft will man in Tests keine exhaustive-deps-Strenge
+      "react-hooks/exhaustive-deps": "off",
+    },
+  },
+
   {
     files: ["**/*.{js,jsx}"],
     languageOptions: {

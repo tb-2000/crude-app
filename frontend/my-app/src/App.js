@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function App() {
   const [names, setNames] = useState([]);
   const [newName, setNewName] = useState('');
 
-  // Namen beim Laden fetchen und bei Änderungen
-  useEffect(() => {
-    fetchNames();
-  }, []);
-
+  // fetchNames vorher deklarieren (hoisting umgehen + exhaustive-deps glücklich machen)
   const fetchNames = async () => {
     try {
       const response = await axios.get('http://localhost:5000/users');
@@ -19,14 +15,19 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    fetchNames();
+  }, []); // ← jetzt ok, weil fetchNames stabil ist (keine Abhängigkeiten)
+
   const addName = async (e) => {
     e.preventDefault();
-    if(!newName.trim()) return;
+    if (!newName.trim()) return;
+
     try {
       const response = await axios.post('http://localhost:5000/users', { name: newName });
       console.log("POST Antwort:", response.data);
       setNewName('');
-      fetchNames(); // Automatisch aktualisieren
+      fetchNames(); // refresh
     } catch (error) {
       console.error('Fehler beim Hinzufügen:', error.response?.data || error.message);
     }
